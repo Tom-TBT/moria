@@ -10,7 +10,7 @@
     
     /* liste des élements */enum {RIEN, MUR, ESCALIER, EAU, ARGENT, 
                                        ANNEAU, ARME, ARMURE, BAGUETTE, PARCHEMIN, 
-                                       POTION, RATION, PERSONNAGE, RAT};
+                                       POTION, RATION, HEROS, RAT};
     #define NB_TYPES_OBJETS 12
     #define NB_TYPES_PERSONNES NB_TYPES_OBJETS+2
     /* liste direction */enum {HAUT, BAS, GAUCHE, DROITE, DESCENDRE};

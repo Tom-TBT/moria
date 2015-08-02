@@ -284,7 +284,7 @@ void afficherCarte(){
             }
             switch(cartePersonnages[j][i])
             {
-                case PERSONNAGE:
+                case HEROS:
                     SDL_BlitSurface(imgHeros, NULL, ecran, &position);
                     break;
 

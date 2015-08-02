@@ -313,7 +313,7 @@ void initialiserCarte(){
         if ((carteObjets[heros.y][heros.x] == RIEN) && 
                 (cartePersonnages[heros.y][heros.x] == RIEN))
         {
-            cartePersonnages[heros.y][heros.x] = PERSONNAGE;
+            cartePersonnages[heros.y][heros.x] = HEROS;
             nonPlace = 0;
         }
     }    

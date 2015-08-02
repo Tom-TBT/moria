@@ -67,52 +67,52 @@ int deplacerJoueur(int direction){
         case HAUT:
             if(cartePersonnages[heros.y-1][heros.x] == MUR)
                 return 1;
-            else if(cartePersonnages[heros.y-1][heros.x] > PERSONNAGE){
+            else if(cartePersonnages[heros.y-1][heros.x] > HEROS){
                 // Si c'est un monstre car après personnage c'est des monstres
                 frappeMonstre(heros.y-1,heros.x);
             }
             else{
                 cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y-1][heros.x] = PERSONNAGE;
+                cartePersonnages[heros.y-1][heros.x] = HEROS;
                 heros.y--;
             }
             break;
         case BAS:
             if(cartePersonnages[heros.y+1][heros.x] == MUR)
                 return 1;
-            else if(cartePersonnages[heros.y+1][heros.x] > PERSONNAGE){
+            else if(cartePersonnages[heros.y+1][heros.x] > HEROS){
                 // Si c'est un monstre
                 frappeMonstre(heros.y+1,heros.x);
             }
             else{
                 cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y+1][heros.x] = PERSONNAGE;
+                cartePersonnages[heros.y+1][heros.x] = HEROS;
                 heros.y++;
             }
             break;
         case GAUCHE:
             if(cartePersonnages[heros.y][heros.x-1] == MUR)
                 return 1;
-            else if(cartePersonnages[heros.y][heros.x-1] > PERSONNAGE){
+            else if(cartePersonnages[heros.y][heros.x-1] > HEROS){
                 // Si c'est un monstre
                 frappeMonstre(heros.y,heros.x-1);
             }
             else{
                 cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y][heros.x-1] = PERSONNAGE;
+                cartePersonnages[heros.y][heros.x-1] = HEROS;
                 heros.x--;
             }
             break;
         case DROITE:
             if(cartePersonnages[heros.y][heros.x+1] == MUR)
                 return 1;
-            else if(cartePersonnages[heros.y][heros.x+1] > PERSONNAGE){
+            else if(cartePersonnages[heros.y][heros.x+1] > HEROS){
                 // Si c'est un monstre
                 frappeMonstre(heros.y,heros.x+1);
             }
             else{
                 cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y][heros.x+1] = PERSONNAGE;
+                cartePersonnages[heros.y][heros.x+1] = HEROS;
                 heros.x++;
             }
             break;

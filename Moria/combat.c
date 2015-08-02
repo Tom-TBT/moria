@@ -14,20 +14,53 @@
 #include "variablesGlobales.h"
 
 
-void frappeMonstre(int yMonstre, int xMonstre) {
+int calculDegats(int precisionAtt, int agiliteAtt, int forceAtt, int agiliteDef, 
+        int armureDef) {
     int degats = 0;
-    struct Monstre* monstre;
-    monstre = getMonstre(xMonstre, yMonstre);
     
-    if (100 - (( 100 - heros.precision ) * 
-            (( monstre->agilite / heros.agilite ) / 2)) >= rand()%100) {
-        degats = heros.force - monstre->armure;
+    if (100 - (( 100 - precisionAtt ) * 
+            (( agiliteDef / agiliteAtt ) / 2)) >= rand()%100) {
+        degats = forceAtt - armureDef;
         if(degats <= 0) {
             degats = 1;
         }
     }
+    return degats;
+}
+
+void messageFrappeMonstre(int degats, int vieMonstre, int typeMonstre){
+    
+    char nomMonstre[20];
+    char message[TAILLE_MESSAGE];
+    char messageAdd[TAILLE_MESSAGE] = {};
+    
+    getNomMonstre(typeMonstre, nomMonstre);
+    
+    if (degats == 0) {
+        sprintf(message, "Vous manquez le %s.", nomMonstre);
+    }
+    else {
+        sprintf(message, "Vous infligez %d degats au %s.",degats, nomMonstre);
+        if (vieMonstre <= 0) {
+            sprintf(messageAdd, "le %s est mort !", nomMonstre);
+        }
+    }    
+    
+    ecrireMessage(message, messageAdd);    
+    attendrePressionTouche(); 
+    afficherCarte();
+}
+
+void frappeMonstre(int yMonstre, int xMonstre) {
+    int degats;
+    struct Monstre* monstre;
+    monstre = getMonstre(xMonstre, yMonstre);
+    
+    degats = calculDegats(heros.precision, heros.agilite, heros.force, 
+            monstre->agilite, monstre->armure);
+
     monstre->vie -= degats;
-    messageCombat(degats, monstre->vie, monstre->type);
+    messageFrappeMonstre(degats, monstre->vie, monstre->type);
     
     if(monstre->vie <= 0) {
         heros.experience += monstre->valeur;
@@ -37,33 +70,38 @@ void frappeMonstre(int yMonstre, int xMonstre) {
     // Passage niveau ??
 }
 
-void messageCombat(int degats, int vieMonstre, int typeMonstre){
-    
+void messageFrappeHeros(int degats, int typeMonstre) {
     char nomMonstre[20];
     char message[TAILLE_MESSAGE];
-    char messageAdd[TAILLE_MESSAGE];
+    char messageAdd[TAILLE_MESSAGE] = {};
     
-    switch(typeMonstre) {
-        case RAT:
-            sprintf(nomMonstre, "rat");
-            break;
-    }
+    getNomMonstre(typeMonstre, nomMonstre);
     
     if (degats == 0) {
-        sprintf(message, "Vous manquez le %s.", nomMonstre);
+        sprintf(message, "Le %s vous rate.", nomMonstre);
     }
     else {
-        if (vieMonstre > 0) {
-            sprintf(message, "Vous infligez %d degats au %s.",degats, nomMonstre);
+        sprintf(message, "Le %s vous inflige %d degats.", nomMonstre, degats);
+        if (heros.vie <= 0) {
+            sprintf(messageAdd, "Vous etes mort !");
         }
-        else {
-            sprintf(message, "Vous infligez %d degats au %s,",degats, nomMonstre);
-            sprintf(messageAdd, "le %s est mort !", nomMonstre);
-        }
-    }    
+    }  
     
     ecrireMessage(message, messageAdd);
-    
-    attendrePressionTouche();    
+    attendrePressionTouche(); 
+    afficherCarte();
 }
 
+void frappeHeros(struct Monstre* monstre) {
+    int degats;
+    degats = calculDegats(monstre->precision, monstre->agilite, monstre->force, 
+            heros.agilite, heros.armure);
+    
+    heros.vie -= degats;
+    messageFrappeHeros(degats, monstre->type);
+    
+    if(heros.vie <= 0) {
+        //Fin jeu
+    }
+    
+}

@@ -17,7 +17,7 @@
     int distribId = 1;
     struct Monstre* teteListeMonstre = NULL;
 
-void deplacementsMonstres(){
+void deplacementsMonstres() {
     /*deplacement selon odeur*/
     int maxOdeur, odeurX, odeurY;
     /*deplacement aleatoire*/
@@ -25,43 +25,51 @@ void deplacementsMonstres(){
     
     struct Monstre* monstreCourant;
 
-    if(teteListeMonstre != NULL){
+    if(teteListeMonstre != NULL) {
         monstreCourant = teteListeMonstre;
         
-        while(monstreCourant != NULL){            
+        while(monstreCourant != NULL) {            
             maxOdeur = carteOdeurs[monstreCourant->y+1][monstreCourant->x];
             odeurX = monstreCourant->x;
             odeurY = monstreCourant->y+1;
-            if(carteOdeurs[monstreCourant->y-1][monstreCourant->x] > maxOdeur){
+            if(carteOdeurs[monstreCourant->y-1][monstreCourant->x] > maxOdeur) {
                 maxOdeur = carteOdeurs[monstreCourant->y-1][monstreCourant->x];
                 odeurX = monstreCourant->x;
                 odeurY = monstreCourant->y-1;
             }
-            if(carteOdeurs[monstreCourant->y][monstreCourant->x+1] > maxOdeur){
+            if(carteOdeurs[monstreCourant->y][monstreCourant->x+1] > maxOdeur) {
                 maxOdeur = carteOdeurs[monstreCourant->y][monstreCourant->x+1];
                 odeurX = monstreCourant->x+1;
                 odeurY = monstreCourant->y;
             }
-            if(carteOdeurs[monstreCourant->y][monstreCourant->x-1] > maxOdeur){
+            if(carteOdeurs[monstreCourant->y][monstreCourant->x-1] > maxOdeur) {
                 maxOdeur = carteOdeurs[monstreCourant->y][monstreCourant->x-1];
                 odeurX = monstreCourant->x-1;
                 odeurY = monstreCourant->y;
             }
-            if(maxOdeur > 10 - monstreCourant->odorat){
-                if(cartePersonnages[odeurY][odeurX] < PERSONNAGE){
+            if(maxOdeur > 10 - monstreCourant->odorat) {
+                if(cartePersonnages[odeurY][odeurX] < HEROS) {
                     cartePersonnages[monstreCourant->y][monstreCourant->x] = RIEN;
                     cartePersonnages[odeurY][odeurX] = monstreCourant->type;
                     monstreCourant->x = odeurX;
                     monstreCourant->y = odeurY;   
                 }
+                else if(cartePersonnages[odeurY][odeurX] == HEROS) {
+                    frappeHeros(monstreCourant);
+                }
             }
-            else{
+            else {
                 aBouge = 0;
-                while(!aBouge){
+                while(!aBouge) {
                     direction = rand() % 4;
-                    switch (direction){
+                    switch (direction) {
                         case HAUT:
-                            if(cartePersonnages[monstreCourant->y-1][monstreCourant->x] != MUR && (monstreCourant->cap != BAS || (cartePersonnages[monstreCourant->y+1][monstreCourant->x] == MUR && cartePersonnages[monstreCourant->y][monstreCourant->x-1] == MUR && cartePersonnages[monstreCourant->y][monstreCourant->x+1] == MUR))){
+                            if(cartePersonnages[monstreCourant->y-1][monstreCourant->x] != MUR 
+                                    && (monstreCourant->cap != BAS 
+                                    || (cartePersonnages[monstreCourant->y+1][monstreCourant->x] == MUR 
+                                    && cartePersonnages[monstreCourant->y][monstreCourant->x-1] == MUR 
+                                    && cartePersonnages[monstreCourant->y][monstreCourant->x+1] == MUR))) {
+                                
                                 cartePersonnages[monstreCourant->y][monstreCourant->x] = RIEN;
                                 cartePersonnages[monstreCourant->y-1][monstreCourant->x] = monstreCourant->type;
                                 monstreCourant->y--;
@@ -70,7 +78,12 @@ void deplacementsMonstres(){
                             }
                             break;
                         case BAS:
-                            if(cartePersonnages[monstreCourant->y+1][monstreCourant->x] != MUR && (monstreCourant->cap != HAUT || (cartePersonnages[monstreCourant->y-1][monstreCourant->x] == MUR && cartePersonnages[monstreCourant->y][monstreCourant->x-1] == MUR && cartePersonnages[monstreCourant->y][monstreCourant->x+1] == MUR))){
+                            if(cartePersonnages[monstreCourant->y+1][monstreCourant->x] != MUR 
+                                    && (monstreCourant->cap != HAUT 
+                                    || (cartePersonnages[monstreCourant->y-1][monstreCourant->x] == MUR 
+                                    && cartePersonnages[monstreCourant->y][monstreCourant->x-1] == MUR 
+                                    && cartePersonnages[monstreCourant->y][monstreCourant->x+1] == MUR))) {
+                                
                                 cartePersonnages[monstreCourant->y][monstreCourant->x] = RIEN;
                                 cartePersonnages[monstreCourant->y+1][monstreCourant->x] = monstreCourant->type;
                                 monstreCourant->y++;
@@ -79,7 +92,12 @@ void deplacementsMonstres(){
                             }
                             break;
                         case GAUCHE:
-                            if(cartePersonnages[monstreCourant->y][monstreCourant->x-1] != MUR && (monstreCourant->cap != DROITE || (cartePersonnages[monstreCourant->y+1][monstreCourant->x] == MUR && cartePersonnages[monstreCourant->y-1][monstreCourant->x] == MUR && cartePersonnages[monstreCourant->y][monstreCourant->x+1] == MUR))){
+                            if(cartePersonnages[monstreCourant->y][monstreCourant->x-1] != MUR 
+                                    && (monstreCourant->cap != DROITE 
+                                    || (cartePersonnages[monstreCourant->y+1][monstreCourant->x] == MUR 
+                                    && cartePersonnages[monstreCourant->y-1][monstreCourant->x] == MUR 
+                                    && cartePersonnages[monstreCourant->y][monstreCourant->x+1] == MUR))) {
+                                
                                 cartePersonnages[monstreCourant->y][monstreCourant->x] = RIEN;
                                 cartePersonnages[monstreCourant->y][monstreCourant->x-1] = monstreCourant->type;
                                 monstreCourant->x--;
@@ -88,7 +106,12 @@ void deplacementsMonstres(){
                             }
                             break;
                         case DROITE:
-                            if(cartePersonnages[monstreCourant->y][monstreCourant->x+1] != MUR && (monstreCourant->cap != GAUCHE || (cartePersonnages[monstreCourant->y+1][monstreCourant->x] == MUR && cartePersonnages[monstreCourant->y-1][monstreCourant->x] == MUR && cartePersonnages[monstreCourant->y][monstreCourant->x-1] == MUR))){
+                            if(cartePersonnages[monstreCourant->y][monstreCourant->x+1] != MUR 
+                                    && (monstreCourant->cap != GAUCHE 
+                                    || (cartePersonnages[monstreCourant->y+1][monstreCourant->x] == MUR 
+                                    && cartePersonnages[monstreCourant->y-1][monstreCourant->x] == MUR 
+                                    && cartePersonnages[monstreCourant->y][monstreCourant->x-1] == MUR))) {
+                                
                                 cartePersonnages[monstreCourant->y][monstreCourant->x] = RIEN;
                                 cartePersonnages[monstreCourant->y][monstreCourant->x+1] = monstreCourant->type;
                                 monstreCourant->x++;
@@ -107,9 +130,9 @@ void deplacementsMonstres(){
     
 }
 
-void initialiserMonstre(struct Monstre* monstreCourant){
+void initialiserMonstre(struct Monstre* monstreCourant) {
     monstreCourant->id = distribId++;
-    switch(monstreCourant->type){
+    switch(monstreCourant->type) {
         case RAT:
             monstreCourant->force = 1;
             monstreCourant->armure = 0;
@@ -122,10 +145,10 @@ void initialiserMonstre(struct Monstre* monstreCourant){
     }
 }
 
-void ajouterMonstre(int typeMonstre, int x, int y){
+void ajouterMonstre(int typeMonstre, int x, int y) {
     struct Monstre* monstreCourant = teteListeMonstre;
     
-    if(teteListeMonstre == NULL){
+    if(teteListeMonstre == NULL) {
         teteListeMonstre = (struct Monstre*)malloc(sizeof(struct Monstre));
         
         teteListeMonstre->x = x;
@@ -135,8 +158,8 @@ void ajouterMonstre(int typeMonstre, int x, int y){
         teteListeMonstre->type = typeMonstre;
         initialiserMonstre(teteListeMonstre);
     }
-    else{
-        while(monstreCourant->suiv != NULL){
+    else {
+        while(monstreCourant->suiv != NULL) {
             monstreCourant = monstreCourant->suiv;
         }
         monstreCourant->suiv = (struct Monstre*) malloc(sizeof(struct Monstre));
@@ -176,12 +199,12 @@ void retirerMonstre(int id) {
     
 }
 
-void spawnMonstres(){
+void spawnMonstres() {
     int xMonst, yMonst;
     int nonPlace = 1;
     
-    if(rand()%10 == 0){
-        while(nonPlace){
+    if(rand()%10 == 0) {
+        while(nonPlace) {
             xMonst = (rand() % (NB_CASES_LARGEUR-4)) + 1;
             yMonst = (rand() % (NB_CASES_HAUTEUR-4)) + 1;
             if(cartePersonnages[yMonst][xMonst] == RIEN && ((yMonst >= heros.y+10 || yMonst <= heros.y-10)&&(xMonst >= heros.x+10 || xMonst <= heros.x-10))){
@@ -205,12 +228,19 @@ struct Monstre* getMonstre(int xMonstre, int yMonstre) {
     return monstreCourant;
 }
 
-void actionMonstres(){
+void getNomMonstre(int typeMonstre, char nomMonstre[]) {
+    switch(typeMonstre) {
+        case RAT:
+            sprintf(nomMonstre, "rat");
+    }
+}
+
+void actionMonstres() {
     spawnMonstres();
     deplacementsMonstres();
 }
 
-void resetMonstres(){
+void resetMonstres() {
     struct Monstre *monstrePrecedant = teteListeMonstre;
     struct Monstre *monstreSuivant;
     
