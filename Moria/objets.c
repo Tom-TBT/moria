@@ -1,52 +1,66 @@
 #include "variablesGlobales.h"
 
-int spawnArgent(){  
-    return (rand()%50 + 20) * heros.niveau;
+int spawnArgent() {
+    return (rand() % 50 + 20) * heros.niveau;
 }
 
-int dropObjet(int typeObjet){
+int dropObjet(int typeObjet) {
     char message[TAILLE_MESSAGE];
-    
+
     int valeurRetour = 0;
-    
+
     int newCash;
-    
-    if(typeObjet >= ARGENT && typeObjet<=RATION){
-        switch(typeObjet){
+
+    if (typeObjet >= ARGENT && typeObjet <= RATION) {
+        switch (typeObjet) {
             case ANNEAU:
-                sprintf(message,"Vous avez trouve un anneau");
+                sprintf(message, "Vous avez trouve un anneau");
                 break;
             case ARME:
-                sprintf(message,"Vous avez trouve une arme");
+                sprintf(message, "Vous avez trouve une arme");
                 break;
             case ARMURE:
-                sprintf(message,"Vous avez trouve une armure");
+                sprintf(message, "Vous avez trouve une armure");
                 break;
             case BAGUETTE:
-                sprintf(message,"Vous avez trouve une baguette");
+                sprintf(message, "Vous avez trouve une baguette");
                 break;
             case PARCHEMIN:
-                sprintf(message,"Vous avez trouve un parchemin");
+                sprintf(message, "Vous avez trouve un parchemin");
                 break;
             case POTION:
-                sprintf(message,"Vous avez trouve une potion");
+                sprintf(message, "Vous avez trouve une potion");
                 break;
             case RATION:
-                sprintf(message,"Vous avez trouve une ration alimentaire");
+                sprintf(message, "Vous avez trouve une ration alimentaire");
                 break;
             case ARGENT:
                 newCash = spawnArgent();
-                sprintf(message,"Vous avez trouve %d pieces", newCash);
+                sprintf(message, "Vous avez trouve %d pieces", newCash);
                 heros.cash += newCash;
                 break;
-        }  
+        }
         valeurRetour = 1;
+    } else if (typeObjet == EAU) {
+        sprintf(message, "Plouf, votre armure est rouillee ...");
     }
-    else if(typeObjet == EAU){
-        sprintf(message,"Plouf, votre armure est rouillee ...");
-    }
-    
-    ecrireMessage(message,"");
-    
+
+    ecrireMessage(message, "");
+
     return valeurRetour;
+}
+
+char* getNomObjet(int csteObj) {
+    char * nomObjet = calloc(TAILLE_NOM_OBJET, sizeof(char));
+    switch (csteObj) {
+        case RATION:
+            sprintf(nomObjet,"Ration alimentaire");
+            break;
+        case ARME:
+            sprintf(nomObjet,"Arme");
+            break;
+        default:
+            break;
+    }
+    return nomObjet;
 }

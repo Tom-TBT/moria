@@ -16,117 +16,10 @@ Rôle : contient des fonction gérant le jeu
 struct Heros heros;
 int nivSuivant[NB_NIVEAUX] = {0,5,12,20,35,60};
 
-void diffuserOdeur(int portee, int x, int y){
-    if(portee != 1){
-        if(carteObjets[y-1][x] != MUR && carteOdeurs[y-1][x] < portee){
-            diffuserOdeur((portee-1),x,(y-1));
-        }
-        if(carteObjets[y+1][x] != MUR && carteOdeurs[y+1][x] < portee){
-            diffuserOdeur((portee-1),x,(y+1));
-        }
-        if(carteObjets[y][x-1] != MUR && carteOdeurs[y][x-1] < portee){
-            diffuserOdeur((portee-1),(x-1),y);
-        }
-        if(carteObjets[y][x+1] != MUR && carteOdeurs[y][x+1] < portee){
-            diffuserOdeur((portee-1),(x+1),y);
-        }
-    }
-    if(carteOdeurs[y][x] < portee){
-        carteOdeurs[y][x] = portee;
-    }
-}
-
-void deplacerOdeur(){
-    int i,j;
-    
-    for(i = 0 ; i < NB_CASES_LARGEUR ; i++)
-    {
-        for(j = 0 ; j < NB_CASES_HAUTEUR ; j++)
-        {
-            carteOdeurs[j][i] = 0;
-        }
-    }
-    diffuserOdeur(heros.odeur, heros.x, heros.y);
-}
-
 void initialiserJeu(){
     srand(time(NULL));
     
-    heros.odeur = 10;
-    heros.cash = 0;
-    heros.vieMax = heros.vie = 6;
-    heros.armure = 0;
-    heros.force = 2;
-    heros.niveau = 1;
-    heros.etage = 1;
-    heros.faim = 60;
-    heros.soif = 40;
-    heros.agilite = 2;
-    heros.precision = 75;
-}
-
-int deplacerJoueur(int direction){
-    switch(direction){
-        case HAUT:
-            if(cartePersonnages[heros.y-1][heros.x] == MUR)
-                return 1;
-            else if(cartePersonnages[heros.y-1][heros.x] > HEROS){
-                // Si c'est un monstre car après personnage c'est des monstres
-                frappeMonstre(heros.y-1,heros.x);
-            }
-            else{
-                cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y-1][heros.x] = HEROS;
-                heros.y--;
-            }
-            break;
-        case BAS:
-            if(cartePersonnages[heros.y+1][heros.x] == MUR)
-                return 1;
-            else if(cartePersonnages[heros.y+1][heros.x] > HEROS){
-                // Si c'est un monstre
-                frappeMonstre(heros.y+1,heros.x);
-            }
-            else{
-                cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y+1][heros.x] = HEROS;
-                heros.y++;
-            }
-            break;
-        case GAUCHE:
-            if(cartePersonnages[heros.y][heros.x-1] == MUR)
-                return 1;
-            else if(cartePersonnages[heros.y][heros.x-1] > HEROS){
-                // Si c'est un monstre
-                frappeMonstre(heros.y,heros.x-1);
-            }
-            else{
-                cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y][heros.x-1] = HEROS;
-                heros.x--;
-            }
-            break;
-        case DROITE:
-            if(cartePersonnages[heros.y][heros.x+1] == MUR)
-                return 1;
-            else if(cartePersonnages[heros.y][heros.x+1] > HEROS){
-                // Si c'est un monstre
-                frappeMonstre(heros.y,heros.x+1);
-            }
-            else{
-                cartePersonnages[heros.y][heros.x] = RIEN;
-                cartePersonnages[heros.y][heros.x+1] = HEROS;
-                heros.x++;
-            }
-            break;
-        case DESCENDRE:
-            if(carteObjets[heros.y][heros.x] != ESCALIER){
-                return 1;
-            }
-            break;
-    }
-    
-    return 0;
+    initialiserHeros();
 }
 
 void attendreCommande(int* signal){
@@ -169,6 +62,11 @@ void attendreCommande(int* signal){
                         deplacementImpossible = 0;
                         *signal = 0;
                         break;
+                    case SDLK_i:
+                        deplacementImpossible = 1;
+                        *signal = 0;
+                        afficherInventaire();
+                        afficherCarte();
                     case SDLK_LESS:
                         deplacementImpossible = deplacerJoueur(DESCENDRE);
                         *signal = 2;
