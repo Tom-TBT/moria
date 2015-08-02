@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/carte.o \
 	${OBJECTDIR}/combat.o \
 	${OBJECTDIR}/gestionPartie.o \
+	${OBJECTDIR}/heros.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/monstres.o \
 	${OBJECTDIR}/objets.o
@@ -87,6 +88,11 @@ ${OBJECTDIR}/gestionPartie.o: gestionPartie.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/gestionPartie.o gestionPartie.c
+
+${OBJECTDIR}/heros.o: heros.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/heros.o heros.c
 
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}

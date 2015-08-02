@@ -21,6 +21,7 @@
       <itemPath>carte.c</itemPath>
       <itemPath>combat.c</itemPath>
       <itemPath>gestionPartie.c</itemPath>
+      <itemPath>heros.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>monstres.c</itemPath>
       <itemPath>objets.c</itemPath>
@@ -68,6 +69,8 @@
       </item>
       <item path="gestionPartie.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="heros.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="monstres.c" ex="false" tool="0" flavor2="0">
@@ -112,6 +115,8 @@
       <item path="constantesGlobales.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="gestionPartie.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="heros.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>

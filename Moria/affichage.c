@@ -38,8 +38,8 @@ void initialiserSDL() {
     
     /*Initialisation de ttf*/
     TTF_Init();
-    policeMessage = TTF_OpenFont("./police/bridge.ttf", 20);
-    policeStatus = TTF_OpenFont("./police/bridge.ttf", 18);
+    policeMessage = TTF_OpenFont("./police/MorrisRomanBlack.ttf", 20);
+    policeStatus = TTF_OpenFont("./police/MorrisRomanBlack.ttf", 18);
     
     /* Initialisation des paramètres de l'écran de jeu*/
     SDL_WM_SetIcon(IMG_Load("Icone.jpg"),NULL);
@@ -127,50 +127,38 @@ void afficherStatus(){
     SDL_Surface *messageSDL;
     SDL_Rect position;
 
-    char varMess[10];
-    char message[20];
+    char status[20];
     position.y = 396;
     
-    sprintf(message, "Etage: ");
-    sprintf(varMess, "%d", heros.etage);
-    strcat(message, varMess);
+    sprintf(status, "Etage: %d", heros.etage);
     position.x = 20;
-    messageSDL = TTF_RenderText_Blended(policeStatus, message, couleurJaune);
+    messageSDL = TTF_RenderText_Blended(policeStatus, status, couleurJaune);
     SDL_BlitSurface(messageSDL, NULL, ecran, &position);
     
-    sprintf(message, "Vie: ");
-    sprintf(varMess, "%d", heros.vie);
-    strcat(message, varMess);
-    position.x = 320;
-    messageSDL = TTF_RenderText_Blended(policeStatus, message, couleurJaune);
+    sprintf(status, "Vie: %d",heros.vie);
+    position.x = 290;
+    messageSDL = TTF_RenderText_Blended(policeStatus, status, couleurJaune);
     SDL_BlitSurface(messageSDL, NULL, ecran, &position);
         
-    sprintf(message, "Force: ");
-    sprintf(varMess, "%d", heros.force);
-    strcat(message, varMess);
-    position.x = 400;
-    messageSDL = TTF_RenderText_Blended(policeStatus, message, couleurJaune);
+    sprintf(status, "Force: %d", heros.force);
+    position.x = 370;
+    messageSDL = TTF_RenderText_Blended(policeStatus, status, couleurJaune);
     SDL_BlitSurface(messageSDL, NULL, ecran, &position);
     
-    sprintf(message, "Armure: ");
-    sprintf(varMess, "%d", heros.armure);
-    strcat(message, varMess);
-    position.x = 490;
-    messageSDL = TTF_RenderText_Blended(policeStatus, message, couleurJaune);
+    sprintf(status, "Armure: %d", heros.armure);
+    position.x = 460;
+    messageSDL = TTF_RenderText_Blended(policeStatus, status, couleurJaune);
     SDL_BlitSurface(messageSDL, NULL, ecran, &position);
     
-    sprintf(message, "Niveau: ");
-    sprintf(varMess, "%d", heros.niveau);
-    strcat(message, varMess);
-    position.x = 600;
-    messageSDL = TTF_RenderText_Blended(policeStatus, message, couleurJaune);
+    sprintf(status, "Niveau: %d  %d/%d", heros.niveau, heros.experience
+            , nivSuivant[heros.niveau]);
+    position.x = 570;
+    messageSDL = TTF_RenderText_Blended(policeStatus, status, couleurJaune);
     SDL_BlitSurface(messageSDL, NULL, ecran, &position);
         
-    sprintf(message, "Argent: ");
-    sprintf(varMess, "%d", heros.cash);
-    strcat(message, varMess);
+    sprintf(status, "Argent: %d", heros.cash);
     position.x = 700;
-    messageSDL = TTF_RenderText_Blended(policeStatus, message, couleurJaune);
+    messageSDL = TTF_RenderText_Blended(policeStatus, status, couleurJaune);
     SDL_BlitSurface(messageSDL, NULL, ecran, &position);
     
 }
@@ -330,4 +318,6 @@ void ecrireMessage(char ligneHaut[], char ligneBas[]) {
     SDL_BlitSurface(messageSDL, NULL, ecran, &positionLigneBas);
     
     SDL_Flip(ecran);
+    
+    attendrePressionTouche(); 
 }

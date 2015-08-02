@@ -14,6 +14,7 @@ Rôle : contient des fonction gérant le jeu
 #include "variablesGlobales.h"
 
 struct Heros heros;
+int nivSuivant[NB_NIVEAUX] = {0,5,12,20,35,60};
 
 void diffuserOdeur(int portee, int x, int y){
     if(portee != 1){
@@ -49,9 +50,11 @@ void deplacerOdeur(){
 }
 
 void initialiserJeu(){
+    srand(time(NULL));
+    
     heros.odeur = 10;
     heros.cash = 0;
-    heros.vie = 6;
+    heros.vieMax = heros.vie = 6;
     heros.armure = 0;
     heros.force = 2;
     heros.niveau = 1;

@@ -47,7 +47,6 @@ void messageFrappeMonstre(int degats, int vieMonstre, int typeMonstre){
     }    
     
     ecrireMessage(message, messageAdd);    
-    attendrePressionTouche(); 
     afficherCarte();
 }
 
@@ -67,7 +66,9 @@ void frappeMonstre(int yMonstre, int xMonstre) {
         retirerMonstre(monstre->id);
     }
     
-    // Passage niveau ??
+    if(heros.experience >= nivSuivant[heros.niveau]) {
+        passageNiveau();
+    }
 }
 
 void messageFrappeHeros(int degats, int typeMonstre) {
@@ -88,7 +89,6 @@ void messageFrappeHeros(int degats, int typeMonstre) {
     }  
     
     ecrireMessage(message, messageAdd);
-    attendrePressionTouche(); 
     afficherCarte();
 }
 

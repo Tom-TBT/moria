@@ -20,6 +20,9 @@
                     MUR_S};
 
     /* taille message info*/
-    #define TAILLE_MESSAGE 56                
+    #define TAILLE_MESSAGE 56  
+                  
+    /* Nombre de niveaux possibles (-1)*/
+    #define NB_NIVEAUX 6
 #endif	/* CONSTANTESGLOBALES_H */
 

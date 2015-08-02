@@ -20,6 +20,8 @@
     
     extern struct Heros heros;
     extern struct Monstre* teteListeMonstre;
+    
+    extern int nivSuivant[NB_NIVEAUX];
 
 #endif	/* VARIABLESGLOBALES_H */
 
