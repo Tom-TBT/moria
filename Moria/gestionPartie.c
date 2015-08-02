@@ -35,7 +35,7 @@ void diffuserOdeur(int portee, int x, int y){
     }
 }
 
-void changerOdeur(){
+void deplacerOdeur(){
     int i,j;
     
     for(i = 0 ; i < NB_CASES_LARGEUR ; i++)
@@ -162,6 +162,10 @@ void attendreCommande(int* signal){
                         deplacementImpossible = deplacerJoueur(GAUCHE);
                         *signal = 0;
                         break;
+                    case SDLK_SPACE:
+                        deplacementImpossible = 0;
+                        *signal = 0;
+                        break;
                     case SDLK_LESS:
                         deplacementImpossible = deplacerJoueur(DESCENDRE);
                         *signal = 2;
@@ -185,9 +189,10 @@ void jouer(){
     
     do{
         do{
-            attendreCommande(&signalCommande);
-            changerOdeur();            
             actionMonstres();
+            afficherCarte();
+            attendreCommande(&signalCommande);
+            deplacerOdeur();            
             afficherCarte();
             if(carteObjets[heros.y][heros.x]!= RIEN){
                 if(dropObjet(carteObjets[heros.y][heros.x])){

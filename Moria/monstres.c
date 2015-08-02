@@ -236,8 +236,8 @@ void getNomMonstre(int typeMonstre, char nomMonstre[]) {
 }
 
 void actionMonstres() {
+    deplacementsMonstres();    
     spawnMonstres();
-    deplacementsMonstres();
 }
 
 void resetMonstres() {
