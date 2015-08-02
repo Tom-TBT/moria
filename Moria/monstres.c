@@ -15,6 +15,7 @@
 #include "structPersonnages.h"
 
     int distribId = 1;
+    struct Monstre* teteListeMonstre = NULL;
 
 void deplacementsMonstres(){
     /*deplacement selon odeur*/
@@ -209,7 +210,7 @@ void actionMonstres(){
     deplacementsMonstres();
 }
 
-void libererMonstres(){
+void resetMonstres(){
     struct Monstre *monstrePrecedant = teteListeMonstre;
     struct Monstre *monstreSuivant;
     

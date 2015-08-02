@@ -15,6 +15,12 @@ Rôle : fonctions gérant le chargement d'une carte
 #include "variablesGlobales.h"
 #include "carte.h"
 
+/* Definitions des cartes du jeu*/
+int carte[NB_BLOCS_HAUTEUR][NB_BLOCS_LARGEUR];
+int cartePersonnages[NB_CASES_HAUTEUR][NB_CASES_LARGEUR];
+int carteObjets[NB_CASES_HAUTEUR][NB_CASES_LARGEUR];
+int carteOdeurs[NB_CASES_HAUTEUR][NB_CASES_LARGEUR];
+
 int chargerCarte()
 {
     
@@ -291,4 +297,25 @@ void spawnObjets(){
             }
         }
     }
+}
+
+/* Charge une carte et y met les objets*/
+void initialiserCarte(){
+    int nonPlace = 1;
+    
+    if(!chargerCarte()){
+        exit(EXIT_FAILURE);
+    }
+    while(nonPlace)
+    {
+        heros.x = (rand() % (NB_CASES_LARGEUR-4)) + 1;
+        heros.y = (rand() % (NB_CASES_HAUTEUR-4)) + 1;
+        if ((carteObjets[heros.y][heros.x] == RIEN) && 
+                (cartePersonnages[heros.y][heros.x] == RIEN))
+        {
+            cartePersonnages[heros.y][heros.x] = PERSONNAGE;
+            nonPlace = 0;
+        }
+    }    
+    spawnObjets();
 }

@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/affichage.o \
 	${OBJECTDIR}/carte.o \
 	${OBJECTDIR}/combat.o \
 	${OBJECTDIR}/gestionPartie.o \
@@ -66,6 +67,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/moria: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/moria ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/affichage.o: affichage.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/affichage.o affichage.c
 
 ${OBJECTDIR}/carte.o: carte.c 
 	${MKDIR} -p ${OBJECTDIR}

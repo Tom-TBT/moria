@@ -10,21 +10,34 @@
 #include <SDL/SDL.h>
 
 #include "structPersonnages.h"
-#include "monstre.h"
 #include "constantesGlobales.h"
 #include "variablesGlobales.h"
 
 
-void ecrireFrappeMonstre(int degats, int vieMonstre, int typeMonstre){
-    SDL_Color couleurJaune = {255, 255, 0};
-    SDL_Surface *messageSDL;
-    SDL_Rect position1, position2;
-    SDL_Event event;
+void frappeMonstre(int yMonstre, int xMonstre) {
+    int degats = 0;
+    struct Monstre* monstre;
+    monstre = getMonstre(xMonstre, yMonstre);
     
-    position1.x = 20;
-    position1.y = 5;
-    position2.x = 20;
-    position2.y = 30;
+    if (100 - (( 100 - heros.precision ) * 
+            (( monstre->agilite / heros.agilite ) / 2)) >= rand()%100) {
+        degats = heros.force - monstre->armure;
+        if(degats <= 0) {
+            degats = 1;
+        }
+    }
+    monstre->vie -= degats;
+    messageCombat(degats, monstre->vie, monstre->type);
+    
+    if(monstre->vie <= 0) {
+        heros.experience += monstre->valeur;
+        retirerMonstre(monstre->id);
+    }
+    
+    // Passage niveau ??
+}
+
+void messageCombat(int degats, int vieMonstre, int typeMonstre){
     
     char nomMonstre[20];
     char message[TAILLE_MESSAGE];
@@ -47,48 +60,10 @@ void ecrireFrappeMonstre(int degats, int vieMonstre, int typeMonstre){
             sprintf(message, "Vous infligez %d degats au %s,",degats, nomMonstre);
             sprintf(messageAdd, "le %s est mort !", nomMonstre);
         }
-    }
+    }    
     
-    messageSDL = TTF_RenderText_Blended(policeMessage, message, couleurJaune);
-    SDL_BlitSurface(messageSDL, NULL, ecran, &position1);
-    messageSDL = TTF_RenderText_Blended(policeMessage, messageAdd, couleurJaune);
-    SDL_BlitSurface(messageSDL, NULL, ecran, &position2);
+    ecrireMessage(message, messageAdd);
     
-    SDL_Flip(ecran);
-    
-    int pause = 1;
-    while(pause) {
-        SDL_WaitEvent(&event);
-        switch(event.type)
-        {
-            case SDL_KEYDOWN:
-                pause = 0;  
-        }
-    }
+    attendrePressionTouche();    
 }
-
-void frappeMonstre(int yMonstre, int xMonstre) {
-    int degats = 0;
-    struct Monstre* monstre;
-    monstre = getMonstre(xMonstre, yMonstre);
-    
-    if (100 - (( 100 - heros.precision ) * 
-            (( monstre->agilite / heros.agilite ) / 2)) >= rand()%100) {
-        degats = heros.force - monstre->armure;
-        if(degats <= 0) {
-            degats = 1;
-        }
-    }
-    monstre->vie -= degats;
-    ecrireFrappeMonstre(degats, monstre->vie, monstre->type);
-    
-    if(monstre->vie <= 0) {
-        heros.experience += monstre->valeur;
-        retirerMonstre(monstre->id);
-    }
-    
-    // Passage niveau ??
-}
-
-
 

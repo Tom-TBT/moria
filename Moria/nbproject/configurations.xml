@@ -5,10 +5,8 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>carte.h</itemPath>
-      <itemPath>combat.h</itemPath>
       <itemPath>constantesEcran.h</itemPath>
       <itemPath>constantesGlobales.h</itemPath>
-      <itemPath>monstre.h</itemPath>
       <itemPath>structPersonnages.h</itemPath>
       <itemPath>variablesGlobales.h</itemPath>
     </logicalFolder>
@@ -19,6 +17,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>affichage.c</itemPath>
       <itemPath>carte.c</itemPath>
       <itemPath>combat.c</itemPath>
       <itemPath>gestionPartie.c</itemPath>
@@ -55,13 +54,13 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="affichage.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="carte.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="carte.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="combat.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="combat.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="constantesEcran.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -70,8 +69,6 @@
       <item path="gestionPartie.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="monstre.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="monstres.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -102,13 +99,13 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
+      <item path="affichage.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="carte.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="carte.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="combat.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="combat.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="constantesEcran.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -117,8 +114,6 @@
       <item path="gestionPartie.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="monstre.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="monstres.c" ex="false" tool="0" flavor2="0">
       </item>

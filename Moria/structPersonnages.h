@@ -13,8 +13,8 @@
         int experience; int precision;}Heros;
     
     struct Monstre{int id; int type; int x; int y; int cap; struct Monstre* suiv;
-    int vie; int force; int armure; int agilite; int valeur;
-    int odorat; int precision;};
+        int vie; int force; int armure; int agilite; int valeur;
+        int odorat; int precision;};
 
 #endif	/* STRUCTPERSO_H */
 
