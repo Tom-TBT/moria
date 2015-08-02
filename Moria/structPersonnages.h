@@ -28,8 +28,8 @@ struct Heros {
     int agilite;
     int experience;
     int precision;
-    int sac[TAILLE_SAC][2];
-    int equipements[TAILLE_EQUIP];
+    int sac[TAILLE_SAC][4]; //1:Nom   2:DecouvertO/N   3:Modificateur   4:Qtité
+    int equipements[TAILLE_EQUIP][3]; //1:Nom   2:DecouvertO/N   3:Modificateur
 } Heros;
 
 enum {

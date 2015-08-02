@@ -339,11 +339,9 @@ void afficherInventaire() {
     int i;
     for (i = 0; i < TAILLE_SAC; i++) {
         nomObjet = getNomObjet(heros.sac[i][0]);
-        sprintf(quantite, "      %d", heros.sac[i][1]);
-        if(heros.sac[i][1] > 0) {
+        sprintf(quantite, "      %d", heros.sac[i][3]);
+        if(heros.sac[i][3] > 0) {
             strcat(nomObjet, quantite);
-        }
-        if(strlen(nomObjet) > 0) {
             messageSDL = TTF_RenderText_Blended(policeInventaire, nomObjet, couleurJaune);
             SDL_BlitSurface(messageSDL, NULL, ecran, &position);
             position.y += 20;
@@ -361,7 +359,7 @@ void afficherInventaire() {
     position.x = 500;
     position.y = 70;
     for (i = 0; i < TAILLE_EQUIP; i++) {
-        nomObjet = getNomObjet(heros.equipements[i]);
+        nomObjet = getNomObjet(heros.equipements[i][0]);
         if(strlen(nomObjet) > 0) {
             messageSDL = TTF_RenderText_Blended(policeInventaire, nomObjet, couleurJaune);
             SDL_BlitSurface(messageSDL, NULL, ecran, &position);

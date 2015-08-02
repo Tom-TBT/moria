@@ -8,19 +8,29 @@
 #ifndef CONSTANTESGLOBALES_H
 #define	CONSTANTESGLOBALES_H 
 
-/* liste des élements */enum {
-    RIEN, MUR, ESCALIER, EAU, ARGENT,
-    ANNEAU, ARME, ARMURE, BAGUETTE, PARCHEMIN,
+/* liste des élements */
+enum {
+    RIEN, MUR, ESCALIER, EAU, ARGENT, ANNEAU, ARME, ARMURE, BAGUETTE, PARCHEMIN,
     POTION, RATION, HEROS, RAT
+};
+
+/* liste des équipements */
+enum {
+    VIDE, EPEE_FER, EPEE_ACIER,
+    POTION_JAUNE,
+    ARMURE_CUIR, ARMURE_FER,
+    RATION_ALIMENTAIRE
 };
 #define NB_TYPES_OBJETS 12
 #define NB_TYPES_PERSONNES NB_TYPES_OBJETS+2
 
-/* liste direction */enum {
+/* liste direction */
+enum {
     HAUT, BAS, GAUCHE, DROITE, DESCENDRE
 };
 
-/* liste murs */enum {
+/* liste murs */
+enum {
     MUR_D, MUR_G, MUR_B, MUR_H, MUR_DB, MUR_GB, MUR_GH,
     MUR_DH, MUR_DGB, MUR_GBH, MUR_DGH, MUR_DBH, MUR_DG, MUR_BH,
     MUR_S
