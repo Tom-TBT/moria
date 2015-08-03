@@ -9,13 +9,14 @@
 #define	STRUCTPERSO_H
 
 #define TAILLE_SAC 10
-#define TAILLE_EQUIP 8  // 1 casque, 1 armure, 1 bottes, 1 collier, 2 anneaux,
+#define TAILLE_EQUIP 7  // 1 casque, 1 armure, 1 bottes, 1 collier, 2 anneaux,
 // 1 arme, 1 carquois
 
 struct Objet{
     int nomObjet;
     int modificateur;
     int estDecouvert;
+    char id;
     struct Objet* objSuiv;
 }Objet;
 
@@ -36,12 +37,11 @@ struct Heros {
     int experience;
     int precision;
     struct Objet *sac;
-    int equipements[TAILLE_EQUIP][3]; //1:Nom   2:DecouvertO/N   3:Modificateur
+    struct Objet *equipements[TAILLE_EQUIP];
 } Heros;
 
 enum {
-    CASQUE_EQ, ARMURE_EQ, BOTTES_EQ, ANNEAUG_EQ, ANNEAUD_EQ,
-    COLLIER_EQ, ARME_EQ, CARQUOIS_EQ
+    CASQUE_EQ, ARMURE_EQ, BOTTES_EQ, ANNEAU_EQ,COLLIER_EQ, ARME_EQ, CARQUOIS_EQ
 };
 
 struct Monstre {

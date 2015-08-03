@@ -131,15 +131,13 @@ void initialiserHeros() {
     
     int i;
     for(i = 0; i < TAILLE_EQUIP; i++) {
-        heros.equipements[i][0] = VIDE;
-        heros.equipements[i][1] = VIDE;
-        heros.equipements[i][2] = VIDE;
+        heros.equipements[i] = NULL;
     }
     heros.sac = NULL;
-    
+
     ajoutInventaire(RATION_ALIMENTAIRE);
     ajoutInventaire(EPEE_FER);
     
-    heros.equipements[ARME_EQ][0] = EPEE_FER;
-    heros.equipements[ARME_EQ][1] = 1;
+    distribObjId();
+    
 }

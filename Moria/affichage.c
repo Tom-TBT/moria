@@ -323,7 +323,7 @@ void afficherInventaire() {
     SDL_Rect position;
     SDL_Color couleurJaune = {255, 255, 0};
     SDL_Surface *messageSDL;
-    char *nomObjet, modificateur[8], titre[10];
+    char *nomObjet, modificateur[8], titre[10], id[20];
 
     SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
     
@@ -338,8 +338,11 @@ void afficherInventaire() {
     position.y = 70;
     struct Objet *objCourant = heros.sac;
     while (objCourant != NULL) {
+        sprintf(id,"%c - ",objCourant->id);
         nomObjet = getNomObjet(objCourant->nomObjet);
-        sprintf(modificateur, " +", objCourant->modificateur);
+        strcat(id,nomObjet);
+        strcpy(nomObjet,id);
+        sprintf(modificateur, " +%d", objCourant->modificateur);
         if(objCourant->estDecouvert) {
             strcat(nomObjet, modificateur);
         }
@@ -360,6 +363,7 @@ void afficherInventaire() {
     
     position.x = 500;
     position.y = 70;
+/*
     int i;
     for (i = 0; i < TAILLE_EQUIP; i++) {
         nomObjet = getNomObjet(heros.equipements[i][0]);
@@ -369,6 +373,7 @@ void afficherInventaire() {
             position.y += 20;
         }
     }
+*/
     
     
     SDL_Flip(ecran);

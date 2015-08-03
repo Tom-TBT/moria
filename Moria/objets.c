@@ -197,3 +197,13 @@ char* getNomObjet(int csteObj) {
     }
     return nomObjet;
 }
+
+void distribObjId(){
+    int i = 97;
+    struct Objet *objCourant = heros.sac;
+    while(objCourant != NULL) {
+        objCourant->id = (char)i;
+        objCourant = objCourant->objSuiv;
+        i++;
+    }
+}
