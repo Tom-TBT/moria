@@ -135,16 +135,10 @@ void initialiserHeros() {
         heros.equipements[i][1] = VIDE;
         heros.equipements[i][2] = VIDE;
     }
-    for(i = 0; i < TAILLE_SAC; i++) {
-        heros.sac[i][0] = VIDE;
-        heros.sac[i][1] = VIDE;
-        heros.sac[i][2] = VIDE;
-        heros.sac[i][3] = VIDE;
-    }
+    heros.sac = NULL;
     
-    heros.sac[0][0] = RATION_ALIMENTAIRE;
-    heros.sac[0][3] = 2;
-    heros.sac[0][2] = 1;
+    ajoutInventaire(RATION_ALIMENTAIRE);
+    ajoutInventaire(EPEE_FER);
     
     heros.equipements[ARME_EQ][0] = EPEE_FER;
     heros.equipements[ARME_EQ][1] = 1;

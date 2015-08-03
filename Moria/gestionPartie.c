@@ -82,7 +82,6 @@ void attendreCommande(int* signal){
 
 void jouer(){
     int signalCommande=0;
-    int etage = 1;
     
     initialiserJeu();    
     initialiserCarte();
@@ -107,12 +106,13 @@ void jouer(){
         if(signalCommande == 1){
             return;
         }
-        etage++;
+        heros.etage++;
+        
         initialiserCarte();
         afficherCarte();
-        if(etage == 10){
+        if(heros.etage == 10){
             // TODO dernier étage
         }
-    }while(signalCommande == 2 && etage <= 10);
+    }while(signalCommande == 2 && heros.etage <= 10);
     
 }

@@ -43,5 +43,7 @@ enum {
 #define NB_NIVEAUX 6
 
 #define TAILLE_NOM_OBJET 30
+
+#define POIDS_INVENTAIRE_MAX 50
 #endif	/* CONSTANTESGLOBALES_H */
 

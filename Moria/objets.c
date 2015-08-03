@@ -5,8 +5,11 @@ objet.c
 Rôle : contient des fonction gérant les objets.
 
 */
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "variablesGlobales.h"
+
 
 int spawnArgent() {
     return (rand() % 50 + 20) * heros.niveau;
@@ -33,27 +36,74 @@ int randModificateur() {
     return resultat;
 }
 
+int poidsObjet(int objet) {
+    int resultat;
+    
+    switch(objet) {
+        case RATION_ALIMENTAIRE:
+            resultat = 2;
+            break;
+        case EPEE_FER:
+            resultat = 8;
+            break;
+        case EPEE_ACIER:
+            resultat = 8;
+            break;
+        case POTION_JAUNE:
+            resultat = 2;
+            break;
+        case ARMURE_CUIR:
+            resultat = 5;
+            break;
+        case ARMURE_FER:
+            resultat = 5;
+            break;
+        default:
+            resultat = 0;
+            break;
+    }
+    return resultat;
+}
+
+int restePlace(int objet) {
+    int poidsInventaire = 0;
+    struct Objet *objCourant = heros.sac;
+    
+    while(objCourant != NULL) {
+        poidsInventaire += poidsObjet(objCourant->nomObjet);
+        objCourant = objCourant->objSuiv;
+    }
+    
+    return (poidsInventaire + poidsObjet(objet)) <= POIDS_INVENTAIRE_MAX;
+}
+
+
 int ajoutInventaire(int objet) {
-    int modificateur = randModificateur();
-    int placeLibre;
-    short estPlein = 1, estPlace = 0;
-    int i;
-    for(i = 0; i < TAILLE_SAC; i++) {
-        if(objet == heros.sac[i][0] && modificateur == heros.sac[i][2]) {
-            heros.sac[i][3] += 1;
-            estPlace = 1;
-        }
-        else if( VIDE == heros.sac[i][0] && estPlein) {
-            placeLibre = i;
-            estPlein = 0;
-        }
+    struct Objet *objCourant = heros.sac;
+    int estAjoute = 0;
+    
+    if(heros.sac == NULL) {
+        heros.sac = (struct Objet*)malloc(sizeof(struct Objet));
+        heros.sac->nomObjet = objet;
+        heros.sac->objSuiv = NULL;
+        heros.sac->modificateur = randModificateur();
+        heros.sac->estDecouvert = 0;
+        
+        estAjoute = 1;
     }
-    if(!estPlace && !estPlein) {
-        heros.sac[placeLibre][0] = objet;
-        heros.sac[placeLibre][2] = modificateur;
-        heros.sac[placeLibre][3] = 1;
+    else if(restePlace(objet)) {
+        while(objCourant->objSuiv != NULL) {
+            objCourant = objCourant->objSuiv;            
+        }
+        objCourant->objSuiv = (struct Objet*)malloc(sizeof(struct Objet));
+        objCourant->objSuiv->nomObjet = objet;
+        objCourant->objSuiv->objSuiv = NULL;
+        objCourant->objSuiv->modificateur = randModificateur();
+        objCourant->objSuiv->estDecouvert = 0;
+        
+        estAjoute = 1;
     }
-    return (estPlace || !estPlein);
+    return estAjoute;
 }
 
 int nouvelObjet(int typeObjet) {

@@ -323,7 +323,7 @@ void afficherInventaire() {
     SDL_Rect position;
     SDL_Color couleurJaune = {255, 255, 0};
     SDL_Surface *messageSDL;
-    char *nomObjet, quantite[8], titre[10];
+    char *nomObjet, modificateur[8], titre[10];
 
     SDL_FillRect(ecran, NULL, SDL_MapRGB(ecran->format, 0, 0, 0));
     
@@ -336,16 +336,18 @@ void afficherInventaire() {
 
     position.x = 100;
     position.y = 70;
-    int i;
-    for (i = 0; i < TAILLE_SAC; i++) {
-        nomObjet = getNomObjet(heros.sac[i][0]);
-        sprintf(quantite, "      %d", heros.sac[i][3]);
-        if(heros.sac[i][3] > 0) {
-            strcat(nomObjet, quantite);
-            messageSDL = TTF_RenderText_Blended(policeInventaire, nomObjet, couleurJaune);
-            SDL_BlitSurface(messageSDL, NULL, ecran, &position);
-            position.y += 20;
+    struct Objet *objCourant = heros.sac;
+    while (objCourant != NULL) {
+        nomObjet = getNomObjet(objCourant->nomObjet);
+        sprintf(modificateur, " +", objCourant->modificateur);
+        if(objCourant->estDecouvert) {
+            strcat(nomObjet, modificateur);
         }
+        messageSDL = TTF_RenderText_Blended(policeInventaire, nomObjet, couleurJaune);
+        SDL_BlitSurface(messageSDL, NULL, ecran, &position);
+        position.y += 20;
+        
+        objCourant = objCourant->objSuiv;
     }
     
     // Ecriture des équipements
@@ -358,6 +360,7 @@ void afficherInventaire() {
     
     position.x = 500;
     position.y = 70;
+    int i;
     for (i = 0; i < TAILLE_EQUIP; i++) {
         nomObjet = getNomObjet(heros.equipements[i][0]);
         if(strlen(nomObjet) > 0) {

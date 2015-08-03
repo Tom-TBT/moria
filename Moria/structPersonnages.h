@@ -12,6 +12,13 @@
 #define TAILLE_EQUIP 8  // 1 casque, 1 armure, 1 bottes, 1 collier, 2 anneaux,
 // 1 arme, 1 carquois
 
+struct Objet{
+    int nomObjet;
+    int modificateur;
+    int estDecouvert;
+    struct Objet* objSuiv;
+}Objet;
+
 struct Heros {
     int x;
     int y;
@@ -28,7 +35,7 @@ struct Heros {
     int agilite;
     int experience;
     int precision;
-    int sac[TAILLE_SAC][4]; //1:Nom   2:DecouvertO/N   3:Modificateur   4:Qtité
+    struct Objet *sac;
     int equipements[TAILLE_EQUIP][3]; //1:Nom   2:DecouvertO/N   3:Modificateur
 } Heros;
 
