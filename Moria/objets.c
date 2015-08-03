@@ -1,3 +1,11 @@
+/*
+objet.c
+-----
+
+Rôle : contient des fonction gérant les objets.
+
+*/
+
 #include "variablesGlobales.h"
 
 int spawnArgent() {
@@ -25,7 +33,7 @@ int randModificateur() {
     return resultat;
 }
 
-ajoutInventaire(int objet) {
+int ajoutInventaire(int objet) {
     int modificateur = randModificateur();
     int placeLibre;
     short estPlein = 1, estPlace = 0;
@@ -45,9 +53,10 @@ ajoutInventaire(int objet) {
         heros.sac[placeLibre][2] = modificateur;
         heros.sac[placeLibre][3] = 1;
     }
+    return (estPlace || !estPlein);
 }
 
-nouvelObjet(int typeObjet) {
+int nouvelObjet(int typeObjet) {
     int resultat;
     
     switch(typeObjet) {
@@ -61,6 +70,7 @@ nouvelObjet(int typeObjet) {
                 }
             }
     }
+    return resultat;
 }
 
 int dropObjet(int typeObjet) {
@@ -77,7 +87,7 @@ int dropObjet(int typeObjet) {
                 break;
             case ARME:
                 sprintf(message, "Vous avez trouve une arme");
-                ajoutInventaire(nouvelObjet(ARME));
+                valeurRetour = ajoutInventaire(nouvelObjet(ARME));
                 break;
             case ARMURE:
                 sprintf(message, "Vous avez trouve une armure");
@@ -98,15 +108,16 @@ int dropObjet(int typeObjet) {
                 newCash = spawnArgent();
                 sprintf(message, "Vous avez trouve %d pieces", newCash);
                 heros.cash += newCash;
+                valeurRetour = 1;
                 break;
         }
-        valeurRetour = 1;
     } else if (typeObjet == EAU) {
         sprintf(message, "Plouf, votre armure est rouillee ...");
     }
 
-    ecrireMessage(message, "");
-
+    if(strlen(message) > 0) {
+        ecrireMessage(message, "");
+    }
     return valeurRetour;
 }
 
