@@ -8,12 +8,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/media/stockage/tom/C/moria/Moria/heros.c</file>
-            <file>file:/media/stockage/tom/C/moria/Moria/gestionPartie.c</file>
             <file>file:/media/stockage/tom/C/moria/Moria/structPersonnages.h</file>
+            <file>file:/media/stockage/tom/C/moria/Moria/gestionPartie.c</file>
             <file>file:/media/stockage/tom/C/moria/Moria/affichage.c</file>
             <file>file:/media/stockage/tom/C/moria/Moria/constantesGlobales.h</file>
-            <file>file:/media/stockage/tom/C/moria/Moria/combat.c</file>
             <file>file:/media/stockage/tom/C/moria/Moria/objets.c</file>
+            <file>file:/media/stockage/tom/C/moria/Moria/monstres.c</file>
         </group>
     </open-files>
 </project-private>

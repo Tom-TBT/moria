@@ -299,7 +299,7 @@ void attendrePressionTouche() {
     }
 }
 
-void ecrireMessage(char ligneHaut[], char ligneBas[]) {
+void ecrireMessage(char ligneHaut[], char ligneBas[], int mettrePause) {
     SDL_Color couleurJaune = {255, 255, 0};
     SDL_Rect positionLigneHaut, positionLigneBas;
     SDL_Surface *messageSDL;
@@ -316,7 +316,9 @@ void ecrireMessage(char ligneHaut[], char ligneBas[]) {
 
     SDL_Flip(ecran);
 
-    attendrePressionTouche();
+    if(mettrePause) {
+        attendrePressionTouche();
+    }
 }
 
 void afficherInventaire() {
@@ -339,7 +341,7 @@ void afficherInventaire() {
     struct Objet *objCourant = heros.sac;
     while (objCourant != NULL) {
         sprintf(id,"%c - ",objCourant->id);
-        nomObjet = getNomObjet(objCourant->nomObjet);
+        nomObjet = getNomObjet(objCourant->codeObjet);
         strcat(id,nomObjet);
         strcpy(nomObjet,id);
         sprintf(modificateur, " +%d", objCourant->modificateur);
@@ -363,17 +365,17 @@ void afficherInventaire() {
     
     position.x = 500;
     position.y = 70;
-/*
+
     int i;
     for (i = 0; i < TAILLE_EQUIP; i++) {
-        nomObjet = getNomObjet(heros.equipements[i][0]);
-        if(strlen(nomObjet) > 0) {
-            messageSDL = TTF_RenderText_Blended(policeInventaire, nomObjet, couleurJaune);
-            SDL_BlitSurface(messageSDL, NULL, ecran, &position);
-            position.y += 20;
+        if(heros.equipements[i] != NULL) {
+        nomObjet = getNomObjet(heros.equipements[i]->codeObjet);
+        messageSDL = TTF_RenderText_Blended(policeInventaire, nomObjet, couleurJaune);
+        SDL_BlitSurface(messageSDL, NULL, ecran, &position);
+        position.y += 20;
         }
     }
-*/
+
     
     
     SDL_Flip(ecran);

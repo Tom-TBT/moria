@@ -137,7 +137,9 @@ void initialiserHeros() {
 
     ajoutInventaire(RATION_ALIMENTAIRE);
     ajoutInventaire(EPEE_FER);
+    ajoutInventaire(EPEE_ACIER);
     
-    distribObjId();
+    distribObjId();    
     
+    equiperObjet('c');
 }

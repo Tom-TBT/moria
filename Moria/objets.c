@@ -7,6 +7,7 @@ Rôle : contient des fonction gérant les objets.
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "variablesGlobales.h"
 
@@ -36,10 +37,10 @@ int randModificateur() {
     return resultat;
 }
 
-int poidsObjet(int objet) {
+int poidsObjet(int codeObjet) {
     int resultat;
     
-    switch(objet) {
+    switch(codeObjet) {
         case RATION_ALIMENTAIRE:
             resultat = 2;
             break;
@@ -65,44 +66,68 @@ int poidsObjet(int objet) {
     return resultat;
 }
 
-int restePlace(int objet) {
+int restePlace(int codeObjet) {
     int poidsInventaire = 0;
     struct Objet *objCourant = heros.sac;
     
     while(objCourant != NULL) {
-        poidsInventaire += poidsObjet(objCourant->nomObjet);
+        poidsInventaire += poidsObjet(objCourant->codeObjet);
         objCourant = objCourant->objSuiv;
     }
     
-    return (poidsInventaire + poidsObjet(objet)) <= POIDS_INVENTAIRE_MAX;
+    return (poidsInventaire + poidsObjet(codeObjet)) <= POIDS_INVENTAIRE_MAX;
 }
 
+int getType(int codeObjet) {
+    int resultat;
+    switch(codeObjet) {
+        case EPEE_ACIER:
+            resultat = ARME_EQ;
+            break;
+        case EPEE_FER:
+            resultat = ARME_EQ;
+            break;
+        case ARMURE_CUIR:
+            resultat = ARMURE_EQ;
+            break;
+        case ARMURE_FER:
+            resultat = ARMURE_EQ;
+            break;
+        default:
+            resultat = CONSOMMABLE;
+            break;     
+    }
+    return resultat;
+}
 
-int ajoutInventaire(int objet) {
+int ajoutInventaire(int codeObjet) {
     struct Objet *objCourant = heros.sac;
     int estAjoute = 0;
     
     if(heros.sac == NULL) {
         heros.sac = (struct Objet*)malloc(sizeof(struct Objet));
-        heros.sac->nomObjet = objet;
+        heros.sac->codeObjet = codeObjet;
         heros.sac->objSuiv = NULL;
         heros.sac->modificateur = randModificateur();
         heros.sac->estDecouvert = 0;
+        heros.sac->typeObjet = getType(codeObjet);
         
         estAjoute = 1;
     }
-    else if(restePlace(objet)) {
+    else if(restePlace(codeObjet)) {
         while(objCourant->objSuiv != NULL) {
             objCourant = objCourant->objSuiv;            
         }
         objCourant->objSuiv = (struct Objet*)malloc(sizeof(struct Objet));
-        objCourant->objSuiv->nomObjet = objet;
+        objCourant->objSuiv->codeObjet = codeObjet;
         objCourant->objSuiv->objSuiv = NULL;
         objCourant->objSuiv->modificateur = randModificateur();
         objCourant->objSuiv->estDecouvert = 0;
+        objCourant->objSuiv->typeObjet = getType(codeObjet);
         
         estAjoute = 1;
     }
+    distribObjId();
     return estAjoute;
 }
 
@@ -119,6 +144,9 @@ int nouvelObjet(int typeObjet) {
                     resultat = EPEE_ACIER;
                 }
             }
+            break;
+        case RATION:
+            resultat = RATION_ALIMENTAIRE;
     }
     return resultat;
 }
@@ -153,6 +181,7 @@ int dropObjet(int typeObjet) {
                 break;
             case RATION:
                 sprintf(message, "Vous avez trouve une ration alimentaire");
+                valeurRetour = ajoutInventaire(nouvelObjet(RATION));
                 break;
             case ARGENT:
                 newCash = spawnArgent();
@@ -166,14 +195,14 @@ int dropObjet(int typeObjet) {
     }
 
     if(strlen(message) > 0) {
-        ecrireMessage(message, "");
+        ecrireMessage(message, "", 1);
     }
     return valeurRetour;
 }
 
-char* getNomObjet(int csteObj) {
+char* getNomObjet(int codeObjet) {
     char * nomObjet = calloc(TAILLE_NOM_OBJET, sizeof(char));
-    switch (csteObj) {
+    switch (codeObjet) {
         case RATION_ALIMENTAIRE:
             sprintf(nomObjet,"Ration alimentaire");
             break;
@@ -206,4 +235,75 @@ void distribObjId(){
         objCourant = objCourant->objSuiv;
         i++;
     }
+}
+
+struct Objet* getObjet(char lettreId) {
+    struct Objet* objCourant = heros.sac;
+    while(objCourant != NULL) {
+        if(objCourant->id == lettreId) {
+            break;
+        }
+        objCourant = objCourant->objSuiv;
+    }
+    return objCourant;
+}
+
+void enleverObjetSac(char lettreId) {
+    struct Objet* objCourant = heros.sac;
+    struct Objet* objPrecedant;
+    if(objCourant->id == lettreId) {
+        heros.sac = objCourant->objSuiv;
+        free(objCourant);
+    }
+    else {
+        objPrecedant = objCourant;
+        objCourant = objCourant->objSuiv;
+        while (objCourant != NULL) {
+            if(objCourant->id == lettreId) {
+                objPrecedant->objSuiv = objCourant->objSuiv;
+                break;
+            }
+            objPrecedant = objCourant;
+            objCourant = objCourant->objSuiv;
+        }
+    }
+}
+
+void rangerObjet(struct Objet* objet) {
+    struct Objet* objetCourant = heros.sac;
+    if(objetCourant == NULL) {
+        heros.sac = objet;
+    }
+    else {
+        while(objetCourant->objSuiv != NULL) {
+            objetCourant = objetCourant->objSuiv;
+        }
+        objetCourant->objSuiv = objet;
+    }    
+    objet->objSuiv = NULL;
+}
+
+int equiperObjet(char lettreId) {
+    int valeurRetour;
+    struct Objet* tmpObj;
+    struct Objet* monObjet = getObjet(lettreId);
+    
+    if(monObjet == NULL) {
+        return 0;
+    }
+    else {
+        if(monObjet->typeObjet < CONSOMMABLE) {
+            tmpObj = heros.equipements[monObjet->typeObjet];            
+            heros.equipements[monObjet->typeObjet] = monObjet; 
+            enleverObjetSac(lettreId);
+            if (tmpObj != NULL) {
+                rangerObjet(tmpObj);
+            }
+            distribObjId();
+        }
+        else {
+            return 0;
+        }
+    }
+    return 1;
 }

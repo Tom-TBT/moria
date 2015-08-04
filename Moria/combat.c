@@ -46,13 +46,15 @@ void messageFrappeMonstre(int degats, int vieMonstre, int typeMonstre){
         }
     }    
     
-    ecrireMessage(message, messageAdd);    
+    ecrireMessage(message, messageAdd, 1);    
     afficherCarte();
 }
 
 void frappeMonstre(int yMonstre, int xMonstre) {
     int degats;
     struct Monstre* monstre;
+    int force = heros.force;
+
     monstre = getMonstre(xMonstre, yMonstre);
     
     degats = calculDegats(heros.precision, heros.agilite, heros.force, 
@@ -88,7 +90,7 @@ void messageFrappeHeros(int degats, int typeMonstre) {
         }
     }  
     
-    ecrireMessage(message, messageAdd);
+    ecrireMessage(message, messageAdd, 1);
     afficherCarte();
 }
 

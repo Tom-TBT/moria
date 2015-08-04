@@ -13,9 +13,10 @@
 // 1 arme, 1 carquois
 
 struct Objet{
-    int nomObjet;
+    int codeObjet;
     int modificateur;
     int estDecouvert;
+    int typeObjet;
     char id;
     struct Objet* objSuiv;
 }Objet;
@@ -41,7 +42,8 @@ struct Heros {
 } Heros;
 
 enum {
-    CASQUE_EQ, ARMURE_EQ, BOTTES_EQ, ANNEAU_EQ,COLLIER_EQ, ARME_EQ, CARQUOIS_EQ
+    CASQUE_EQ, ARMURE_EQ, BOTTES_EQ, ANNEAU_EQ,COLLIER_EQ, ARME_EQ, CARQUOIS_EQ,
+    CONSOMMABLE
 };
 
 struct Monstre {

@@ -22,9 +22,112 @@ void initialiserJeu(){
     initialiserHeros();
 }
 
+char readCharSDL() {
+    SDL_Event event;
+    int attente = 1;
+    char caractereLu;
+    
+    while (attente)
+    {
+        SDL_PollEvent(&event);
+        switch (event.type)
+        {
+        case SDL_KEYDOWN:
+            switch (event.key.keysym.sym) {
+            case SDLK_a:
+                caractereLu = 'a';
+            break;
+            case SDLK_b:
+                caractereLu = 'b';
+            break;           
+            case SDLK_c:
+                caractereLu = 'c';
+            break;
+            case SDLK_d:
+                caractereLu = 'd';
+            break;            
+            case SDLK_e:
+                caractereLu = 'e';
+            break;
+            case SDLK_f:
+                caractereLu = 'f';
+            break;           
+            case SDLK_g:
+                caractereLu = 'g';
+            break;
+            case SDLK_h:
+                caractereLu = 'h';
+            break;           
+            case SDLK_i:
+                caractereLu = 'i';
+            break;
+            case SDLK_j:
+                caractereLu = 'j';
+            break;       
+            case SDLK_k:
+                caractereLu = 'k';
+            break;
+            case SDLK_l:
+                caractereLu = 'l';
+            break; 
+            case SDLK_m:
+                caractereLu = 'm';
+            break;
+            case SDLK_n:
+                caractereLu = 'n';
+            break;           
+            case SDLK_o:
+                caractereLu = 'o';
+            break;
+            case SDLK_p:
+                caractereLu = 'p';
+            break;       
+            case SDLK_q:
+                caractereLu = 'q';
+            break;
+            case SDLK_r:
+                caractereLu = 'r';
+            break;
+            case SDLK_s:
+                caractereLu = 's';
+            break;
+            case SDLK_t:
+                caractereLu = 't';
+            break;       
+            case SDLK_u:
+                caractereLu = 'u';
+            break;
+            case SDLK_v:
+                caractereLu = 'v';
+            break;
+            case SDLK_w:
+                caractereLu = 'w';
+            break;
+            case SDLK_x:
+                caractereLu = 'x';
+            break;       
+            case SDLK_y:
+                caractereLu = 'y';
+            break;
+            case SDLK_z:
+                caractereLu = 'z';
+            break;
+            default:
+                caractereLu = '?';
+                break;
+            }           
+            attente = 0;
+         break;
+        }
+    } 
+    return caractereLu;
+}
+
 void attendreCommande(int* signal){
     SDL_Event event;
     int deplacementImpossible;
+    
+    char lettreObjet;
     
     do{
         SDL_WaitEvent(&event);
@@ -67,6 +170,18 @@ void attendreCommande(int* signal){
                         *signal = 0;
                         afficherInventaire();
                         afficherCarte();
+                        break;
+                    case SDLK_e:
+                        deplacementImpossible = 1;
+                        *signal = 0;
+                        ecrireMessage("Quel objet voulez vous equiper ?",
+                                "(appuyez sur la touche correspondante)", 0);
+                        if(!equiperObjet(readCharSDL())){
+                            afficherCarte();
+                            ecrireMessage("Vous ne pouvez pas equiper cela !","",1);
+                        }
+                        afficherCarte();
+                        break;
                     case SDLK_LESS:
                         deplacementImpossible = deplacerJoueur(DESCENDRE);
                         *signal = 2;
